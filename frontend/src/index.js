@@ -10,48 +10,38 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import App from "./App";
-
-import HomeScreen from "./screens/site/HomeScreen.jsx";
-import PrivateRoutes from "./components/utils/PrivateRoutes.jsx";
-import AdminRoutes from "./components/utils/AdminRoutes.jsx";
-import UserRoutes from "./components/utils/UserRoutes.jsx";
-import LoginScreen from "./screens/site/LoginScreen.jsx";
-import PublicLayout from "./components/layouts/PublicLayout";
-import NotFound from "./screens/NotFound.jsx";
-import RegisterScreen from "./screens/site/RegisterScreen.jsx";
-import PrivateDashboard from "./screens/Private/PrivateDashboard.jsx";
-
+import NotFound from "./screens/NotFound";
+import PrivateRoutes from "./components/utils/PrivateRoutes";
+import AdminRoutes from "./components/utils/AdminRoutes";
+import UserRoutes from "./components/utils/UserRoutes";
+import Login from "./screens/Login";
+import About from "./screens/About";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route path="/connexion" element={<LoginScreen />} />
-      <Route path="/register" element={<RegisterScreen />} />
-   
-      {/* Public Routes */}
-      <Route path="/" element={<PublicLayout />}>
-        <Route index={true} path="/" element={<HomeScreen />} />
-       
-      </Route>
+      {/* Page d'accueil */}
+      <Route index element={<Login />} />
+
+      {/* Page de connexion */}
+      <Route path="a-propos" element={<About/>} />
 
       {/* Private Routes */}
-      <Route path="/" element={<PrivateRoutes />}>
-
-        {/* Routes spécifiques aux utilisateurs privés */}
-        <Route path="/private-dashboard" element={<PrivateDashboard />} />
-       
-    
+      <Route path="private" element={<PrivateRoutes />}>
+        {/* Exemple de route privée */}
+        <Route path="dashboard" element={<h2>Private Dashboard</h2>} />
       </Route>
 
       {/* Admin Routes */}
-      <Route path="/" element={<AdminRoutes />}>
-        {/* Routes spécifiques aux administrateurs */}
-      
+      <Route path="admin" element={<AdminRoutes />}>
+        {/* Exemple de route admin */}
+        <Route path="panel" element={<h2>Admin Panel</h2>} />
       </Route>
 
       {/* User Routes */}
-      <Route path="/" element={<UserRoutes />}>
-        {/* Routes spécifiques aux utilisateurs réguliers */}
+      <Route path="user" element={<UserRoutes />}>
+        {/* Exemple de route utilisateur */}
+        <Route path="profile" element={<h2>User Profile</h2>} />
       </Route>
 
       {/* Route générique pour gérer toutes les autres routes non définies */}
