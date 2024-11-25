@@ -9,7 +9,7 @@ const PrivateRoutes = () => {
     return <Navigate to="/connexion" replace />;
   }
 
-  return userInfo.role === "Private" ? (
+  return userInfo.role === "private" ? (
     <PrivateLayout>
       <Outlet />
     </PrivateLayout>

@@ -10,7 +10,7 @@ const AdminRoutes = () => {
     return <Navigate to="/" replace />;
   }
 
-  return userInfo.role === "Admin" ? (
+  return userInfo.role === "admin" ? (
     <AdminLayout>
       <Outlet />
     </AdminLayout>

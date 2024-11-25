@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "compta", "admin", "achat", "caisse"],
+      enum: ["user", "private", "admin"],
       default: "user",
     },
     password: {
@@ -53,3 +53,4 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 export default mongoose.model("User", UserSchema);
+

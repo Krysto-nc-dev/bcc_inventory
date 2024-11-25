@@ -9,17 +9,10 @@ const users = [
     password: bcrypt.hashSync("123456", 10), // Hasher le mot de passe
   },
   {
-    _id: "5d7a514b5d2c12c7449be043",
-    name: "Compta Account",
-    email: "compta@mail.com",
-    role: "compta",
-    password: bcrypt.hashSync("123456", 10), // Hasher le mot de passe
-  },
-  {
     _id: "5d7a514b5d2c12c7449be044",
-    name: "Achat Account",
-    email: "achat@ail.com",
-    role: "achat",
+    name: "Private Account",
+    email: "private@mail.com",
+    role: "private",
     password: bcrypt.hashSync("123456", 10), // Hasher le mot de passe
   },
   {
