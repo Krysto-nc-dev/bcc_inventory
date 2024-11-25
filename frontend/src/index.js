@@ -17,6 +17,7 @@ import UserRoutes from "./components/utils/UserRoutes";
 import Login from "./screens/Login";
 import About from "./screens/About";
 import AdminDashboard from "./screens/admin/AdminDashboard";
+import AdminInventories from "./screens/admin/AdminInventories";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
       <Route path="admin" element={<AdminRoutes />}>
         {/* Exemple de route admin */}
         <Route path="dashboard" element={<AdminDashboard/>} />
+        <Route path="inventories" element={<AdminInventories/>} />
       </Route>
 
       {/* User Routes */}

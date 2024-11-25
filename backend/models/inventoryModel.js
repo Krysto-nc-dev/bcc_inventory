@@ -22,6 +22,12 @@ const InventorySchema = new mongoose.Schema(
     dateFin: {
       type: Date,
     },
+    nom: {
+      type: String,
+      required: [true, "Veuillez fournir un nom pour l'inventaire"],
+      maxlength: [50, "Le nom ne peut pas dépasser 50 caractères"],
+      default: 'Inventaire',
+    },
     statut: {
       type: String,
       enum: ['En cours', 'Terminé'],

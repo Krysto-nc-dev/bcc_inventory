@@ -21,7 +21,7 @@ const getInventories = asyncHandler(async (req, res) => {
 // @route   POST /api/inventories
 // @access  Public
 const createInventory = asyncHandler(async (req, res) => {
-  const { zones, agents, dateDebut, dateFin, statut } = req.body;
+  const { zones, agents, dateDebut, dateFin, statut, nom } = req.body;
 
   if (!zones || zones.length === 0) {
     res.status(400);
@@ -39,6 +39,7 @@ const createInventory = asyncHandler(async (req, res) => {
     dateDebut,
     dateFin,
     statut,
+    nom,
   });
 
   const createdInventory = await inventory.save();

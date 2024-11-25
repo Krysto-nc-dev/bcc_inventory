@@ -3,62 +3,86 @@
 @tailwind utilities;
 
 :root {
-  --primaryColor: #ffc000; /* Jaune vif (couleur principale du logo) */
-  --secondaryColor: #000000; /* Noir (couleur secondaire du logo) */
-  --accentColor: #ffd700; /* Doré pour les accents */
-  --textColor: #ffffff; /* Blanc pour le texte */
-  --backgroundColor: #333333; /* Fond général sombre */
-  --grayColor: #4d4d4d; /* Gris neutre pour arrière-plans */
-  --highlightColor: #f9f871; /* Jaune clair pour surbrillance */
-  --mutedColor: #bdbdbd; /* Gris clair pour texte secondaire */
-  --dangerColor: #d32f2f; /* Rouge pour alerte */
-  --warningColor: #ff9800; /* Orange pour avertissement */
-  --successColor: #388e3c; /* Vert pour succès */
+  --primaryColor: #1a1a1a; /* Noir/gris foncé pour les éléments principaux */
+  --secondaryColor: #ffffff; /* Blanc pour les textes */
+  --accentColor: #4a90e2; /* Bleu doux pour les liens et accents */
+  --textColor: #d6d6d6; /* Gris clair pour les textes */
+  --backgroundColor: #121212; /* Noir pour le fond général */
+  --grayColor: #2e2e2e; /* Gris foncé pour les arrière-plans */
+  --highlightColor: #3c3c3c; /* Gris moyen pour surbrillance */
+  --mutedColor: #9e9e9e; /* Gris neutre pour le texte secondaire */
+  --dangerColor: #d9534f; /* Rouge pour les alertes */
+  --successColor: #5cb85c; /* Vert doux pour les succès */
 }
 
 /* Boutons */
 .btn {
-  @apply w-full flex justify-center items-center p-3 space-x-3 font-bold text-textColor rounded-md bg-primaryColor shadow-md hover:bg-highlightColor hover:shadow-lg transition-all duration-150 ease-in-out;
+  @apply px-4 py-2 flex justify-center items-center text-sm font-medium text-secondaryColor rounded-md bg-primaryColor hover:bg-highlightColor transition-all duration-150 ease-in-out;
 }
 
-/* Toast styles */
-.Toastify__toast-body {
-  font-size: 13px;
-  color: var(--textColor);
+.btn:hover {
+  @apply bg-accentColor text-accentColor;
 }
 
 /* Arrière-plan */
 body {
-  @apply text-sm text-textColor bg-backgroundColor;
+  @apply text-sm text-textColor bg-backgroundColor font-sans;
 }
 
+/* Inputs */
 input {
-  @apply w-full p-3 border rounded-md outline-none text-textColor bg-grayColor border-mutedColor focus:ring-2 focus:ring-primaryColor placeholder-mutedColor transition duration-200;
+  @apply w-full px-3 py-2 text-sm border rounded-md outline-none text-secondaryColor bg-grayColor border-mutedColor focus:ring-2 focus:ring-accentColor placeholder-mutedColor transition duration-200;
 }
 
+/* Cards */
 .card {
-  @apply bg-grayColor text-textColor rounded-lg shadow-lg p-6 transition-transform duration-200 hover:scale-105;
+  @apply bg-grayColor text-textColor rounded-md shadow p-4 transition-transform duration-150 hover:scale-105;
 }
 
 .card:hover {
-  @apply bg-secondaryColor text-primaryColor;
+  @apply bg-highlightColor;
 }
 
 /* Tableaux */
 table {
-  @apply w-full border-collapse border border-primaryColor;
+  @apply w-full border-collapse border border-gray-700 bg-grayColor text-sm;
 }
 
-th,
+th {
+  @apply py-2 px-3 text-left border-b border-gray-600 bg-grayColor text-secondaryColor font-medium;
+}
+
 td {
-  @apply py-3 px-4 text-left border-b border-mutedColor;
+  @apply py-2 px-3 border-b border-gray-600 text-textColor;
+}
+
+tr:hover {
+  @apply bg-highlightColor text-secondaryColor cursor-pointer transition duration-150;
 }
 
 thead {
-  @apply bg-primaryColor text-secondaryColor;
+  @apply bg-grayColor text-secondaryColor;
 }
 
-/* Animation du loader */
+tbody tr:last-child td {
+  @apply border-none;
+}
+
+/* Liens */
+a {
+  @apply text-accentColor text-sm hover:underline transition duration-150;
+}
+
+a:hover {
+  @apply text-highlightColor;
+}
+
+/* Loader */
+.loader {
+  animation: spin 1s linear infinite;
+  color: var(--accentColor);
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -68,73 +92,7 @@ thead {
   }
 }
 
-.loader {
-  animation: spin 1s linear infinite;
-  color: var(--primaryColor);
-}
-
-/* Grille de tâches */
-.task-board {
-  @apply flex justify-around mt-10 bg-backgroundColor p-6 rounded-md;
-}
-
-.task-column {
-  @apply flex flex-col items-center bg-grayColor rounded-lg shadow-md p-4 w-1/3;
-}
-
-.task-column h2 {
-  @apply text-lg font-semibold text-primaryColor mb-4;
-}
-
-.task-card {
-  @apply w-full bg-primaryColor text-secondaryColor p-3 rounded-lg shadow-md mb-4 cursor-pointer transition-all duration-200 hover:bg-highlightColor hover:shadow-lg;
-}
-
-/* Liens */
-a {
-  @apply text-primaryColor hover:underline transition duration-150;
-}
-
-a:hover {
-  @apply text-highlightColor;
-}
-
-/* Ligne avec clamp */
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* FullCalendar styles */
-.fc {
-  --fc-bg-color: var(--backgroundColor);
-  --fc-text-color: var(--textColor);
-  --fc-border-color: var(--primaryColor);
-}
-
-.fc .fc-toolbar-title {
-  @apply text-primaryColor font-semibold text-lg;
-}
-
-.fc .fc-button {
-  @apply bg-transparent border-none text-mutedColor;
-}
-
-.fc .fc-button:hover {
-  @apply bg-secondaryColor text-textColor;
-}
-
-.fc .fc-daygrid-event {
-  @apply bg-accentColor text-textColor rounded px-2 py-1;
-}
-
-.fc .fc-daygrid-event:hover {
-  @apply bg-highlightColor text-secondaryColor;
-}
-
 /* Composant de retour */
 .btn-back {
-  @apply bg-secondaryColor text-primaryColor px-6 py-3 rounded-md font-semibold shadow-md hover:bg-highlightColor hover:text-secondaryColor transition-all;
+  @apply bg-grayColor text-secondaryColor px-4 py-2 text-sm rounded-md font-medium hover:bg-highlightColor hover:text-accentColor transition-all;
 }
