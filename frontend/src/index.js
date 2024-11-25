@@ -18,6 +18,7 @@ import Login from "./screens/Login";
 import About from "./screens/About";
 import AdminDashboard from "./screens/admin/AdminDashboard";
 import AdminInventories from "./screens/admin/AdminInventories";
+import AdminInventoryDetails from "./screens/admin/AdminInventoryDetails"; // Import du composant des détails d'inventaire
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
       <Route index element={<Login />} />
 
       {/* Page de connexion */}
-      <Route path="a-propos" element={<About/>} />
+      <Route path="a-propos" element={<About />} />
 
       {/* Private Routes */}
       <Route path="private" element={<PrivateRoutes />}>
@@ -37,8 +38,9 @@ const router = createBrowserRouter(
       {/* Admin Routes */}
       <Route path="admin" element={<AdminRoutes />}>
         {/* Exemple de route admin */}
-        <Route path="dashboard" element={<AdminDashboard/>} />
-        <Route path="inventories" element={<AdminInventories/>} />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="inventories" element={<AdminInventories />} />
+        <Route path="inventories/:id" element={<AdminInventoryDetails />} /> {/* Route pour les détails d'un inventaire */}
       </Route>
 
       {/* User Routes */}

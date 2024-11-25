@@ -46,7 +46,7 @@ const InventoryManager = () => {
 
   // Fonction pour naviguer vers la page dédiée à un inventaire
   const handleInventoryClick = (inventoryId) => {
-    navigate(`/inventories/${inventoryId}`);
+    navigate(`/admin/inventories/${inventoryId}`);
   };
 
   return (
