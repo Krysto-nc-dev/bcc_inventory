@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import logoImage from "../assets/logo_rectangle.jpg"; // Ajout du logo
+import logoImage from "../assets/logo_qc.jpeg"; // Ajout du logo
 import { Loader } from "lucide-react";
 
 const Login = () => {
@@ -52,19 +52,16 @@ const Login = () => {
       <div className="w-full max-w-md bg-gray-800 text-white shadow-xl rounded-lg p-8">
         {/* Logo de la quincaillerie */}
         <div className="flex justify-center mb-6">
-          <img
+          {/* <img
             src={logoImage}
             alt="Quincaillerie Calédonienne"
             className="h-16 w-auto"
-          />
+          /> */}
         </div>
 
-        <h2 className="text-2xl font-bold text-center text-primaryColor mb-6">
-          Connexion
-        </h2>
-        <p className="text-center text-gray-400 mb-8">
+        <h2 className="text-center text-lg text-gray-400 mb-8">
           Connectez-vous pour accéder à votre compte.
-        </p>
+        </h2>
 
         <form onSubmit={submitHandler} className="space-y-4">
           <input

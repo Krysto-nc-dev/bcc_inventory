@@ -1,12 +1,12 @@
 const records = [
   {
     _id: "5f4b514b5d2c12c7449be200",
-    zone: "5f2b514b5d2c12c7449be000", // Référence à la zone
+    zone: "5f2b514b5d2c12c7449be000", // Zone correspondante
     typeAction: "Comptage",
-    agent: "5f1a514b5d2c12c7449be001", // Référence à l'agent
-    codeBarre: "4006381333931", // Code-barres unique correspondant à l'action
-    quantite: 15, // Quantité comptée
-    dateAction: "2024-06-01T10:00:00.000Z", // Date de l'action
+    agent: "5f1a514b5d2c12c7449be001", // Agent correspondant
+    codeBarre: "4006381333931",
+    quantite: 15,
+    dateAction: "2024-06-01T10:00:00.000Z",
   },
   {
     _id: "5f4b514b5d2c12c7449be201",
@@ -14,7 +14,7 @@ const records = [
     typeAction: "Bipage",
     agent: "5f1a514b5d2c12c7449be002",
     codeBarre: "4006381333948",
-    quantite: null, // Pas de quantité pour le Bipage
+    quantite: null,
     dateAction: "2024-06-02T11:00:00.000Z",
   },
   {

@@ -72,7 +72,9 @@ const AdminLayout = ({ children }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 ml-64 p-4 overflow-auto">{children}</div>
+      <div className="flex-1 ml-64 p-4 bg-gray-900 text-gray-100 overflow-auto">
+        {children}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetInventoryByIdQuery } from "../../slices/inventorySlice";
+import { useGetRecordsQuery } from "../../slices/recordSlice";
 
 const AdminInventoryDetails = () => {
   const { id: inventoryId } = useParams();
@@ -8,42 +9,54 @@ const AdminInventoryDetails = () => {
   // Récupérer les détails de l'inventaire
   const {
     data: inventory,
-    error,
-    isLoading,
+    error: inventoryError,
+    isLoading: inventoryLoading,
   } = useGetInventoryByIdQuery(inventoryId);
 
-  if (isLoading) {
+  // Récupérer les enregistrements
+  const {
+    data: records,
+    error: recordsError,
+    isLoading: recordsLoading,
+  } = useGetRecordsQuery();
+
+  if (inventoryLoading || recordsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <span className="text-lg text-mutedColor">Chargement...</span>
+        <span className="text-lg text-gray-500">Chargement...</span>
       </div>
     );
   }
 
-  if (error) {
+  if (inventoryError || recordsError) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <span className="text-lg text-dangerColor">
-          Erreur lors du chargement des détails de l'inventaire.
+        <span className="text-lg text-red-500">
+          Erreur lors du chargement des données.
         </span>
       </div>
     );
   }
 
+  // Filtrer les enregistrements pour les zones de l'inventaire
+  const filteredRecords = records?.filter((record) =>
+    inventory?.zones.some((zone) => zone._id === record.zone)
+  );
+
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-grayColor text-secondaryColor rounded-lg shadow-md">
+    <div className="p-4 max-w-7xl mx-auto text-gray-300 bg-gray-800 rounded-lg shadow-md">
       {inventory ? (
         <div>
-          {/* Header */}
+          {/* En-tête */}
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-2xl font-bold">
               {inventory.nom || "Inventaire"}
             </h1>
             <span
-              className={`py-1 px-3 rounded-full ${
+              className={`py-1 px-2 rounded-full text-xs font-semibold ${
                 inventory.statut === "En cours"
-                  ? "bg-warningColor text-black"
-                  : "bg-successColor text-white"
+                  ? "bg-red-500 text-white"
+                  : "bg-green-500 text-white"
               }`}
             >
               {inventory.statut}
@@ -51,7 +64,7 @@ const AdminInventoryDetails = () => {
           </div>
 
           {/* Dates */}
-          <div className="mb-6 text-sm">
+          <div className="mb-4 text-sm">
             <p>
               Date de début :{" "}
               {new Date(inventory.dateDebut).toLocaleDateString()}
@@ -66,58 +79,83 @@ const AdminInventoryDetails = () => {
 
           {/* Zones */}
           <div className="mb-6">
-            <h2 className="text-2xl font-semibold mb-4">Zones</h2>
-            <div className="flex flex-wrap gap-4">
-              {inventory.zones.map((zone, index) => (
+            <h2 className="text-lg font-semibold mb-3">Zones</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {inventory.zones.map((zone) => (
                 <div
                   key={zone._id}
-                  className="bg-highlightColor p-4 rounded-lg shadow-md w-full sm:w-1/2 lg:w-1/3"
+                  className="p-3 bg-gray-700 rounded-md shadow-md"
                 >
-                  <h3 className="text-xl font-bold mb-2">{zone.nom}</h3>
-                  <p className="text-sm text-mutedColor mb-2">
+                  <h3 className="text-lg font-bold mb-1">{zone.nom}</h3>
+                  <p className="text-sm text-gray-400 mb-2">
                     {zone.designation} - {zone.lieu}
                   </p>
-                  <ul className="space-y-1">
-                    {zone.parties.map((partie, i) => (
-                      <li
-                        key={i}
-                        className={`py-1 px-2 rounded text-sm ${
-                          partie.status === "À faire"
-                            ? "bg-dangerColor text-white"
-                            : "bg-successColor text-black"
-                        }`}
-                      >
-                        {partie.type}: {partie.status}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Agents */}
+          {/* Logs des enregistrements */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Agents</h2>
-            <ul className="space-y-2">
-              {inventory.agents.map((agent) => (
-                <li
-                  key={agent._id}
-                  className="p-3 bg-highlightColor rounded shadow-md flex justify-between items-center"
-                >
-                  <span>
-                    {agent.nom} {agent.prenom}
-                  </span>
-                  <span className="text-sm text-mutedColor">
-                    Créé le {new Date(agent.createdAt).toLocaleDateString()}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <h2 className="text-lg font-semibold mb-3">
+              Logs des Enregistrements
+            </h2>
+            {filteredRecords?.length > 0 ? (
+              <table className="w-full border-collapse border border-gray-700 bg-gray-700">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-3 text-left text-gray-200">
+                      Type d'Action
+                    </th>
+                    <th className="py-2 px-3 text-left text-gray-200">Zone</th>
+                    <th className="py-2 px-3 text-left text-gray-200">Agent</th>
+                    <th className="py-2 px-3 text-left text-gray-200">
+                      Code Barre
+                    </th>
+                    <th className="py-2 px-3 text-left text-gray-200">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredRecords.map((record) => (
+                    <tr
+                      key={record._id}
+                      className="border-t border-gray-600 hover:bg-gray-600"
+                    >
+                      <td className="py-2 px-3 text-sm text-gray-300 font-semibold">
+                        {record.typeAction}
+                      </td>
+                      <td className="py-2 px-3 text-sm text-gray-300">
+                        {inventory.zones.find(
+                          (zone) => zone._id === record.zone
+                        )?.nom || "N/A"}
+                      </td>
+                      <td className="py-2 px-3 text-sm text-gray-300">
+                        {inventory.agents.find(
+                          (agent) => agent._id === record.agent
+                        )?.nom || "N/A"}{" "}
+                        {inventory.agents.find(
+                          (agent) => agent._id === record.agent
+                        )?.prenom || ""}
+                      </td>
+                      <td className="py-2 px-3 text-sm text-gray-300">
+                        {record.codeBarre}
+                      </td>
+                      <td className="py-2 px-3 text-sm text-gray-300">
+                        {new Date(record.dateAction).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="text-gray-400">
+                Aucun enregistrement trouvé pour cet inventaire.
+              </p>
+            )}
           </div>
         </div>
       ) : (
-        <div className="text-center text-lg text-mutedColor">
+        <div className="text-center text-lg text-gray-500">
           Aucun détail d'inventaire trouvé.
         </div>
       )}
