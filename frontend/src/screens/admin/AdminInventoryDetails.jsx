@@ -1,7 +1,9 @@
 import React from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useGetInventoryByIdQuery } from "../../slices/inventorySlice";
 import { useGetRecordsQuery } from "../../slices/recordSlice";
+import Barcode from "react-barcode"; // Importer Barcode
 
 const AdminInventoryDetails = () => {
   const { id: inventoryId } = useParams();
@@ -19,6 +21,38 @@ const AdminInventoryDetails = () => {
     error: recordsError,
     isLoading: recordsLoading,
   } = useGetRecordsQuery();
+
+  const handleGeneratePDF = async () => {
+    try {
+      // Utilisation d'Axios pour la requête
+      const response = await axios.get(
+        `http://localhost:4000/inventories/${inventoryId}/generate-pdf`,
+        {
+          responseType: "blob", // Reçoit la réponse en tant que Blob
+          headers: {
+            Accept: "application/pdf", // Précise que l'on attend un PDF
+          },
+          withCredentials: true, // Si vous avez besoin d'envoyer des cookies
+        }
+      );
+
+      const blob = response.data;
+      if (blob && blob.size > 0) {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${inventory?.nom || "inventaire"}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url); // Nettoyage après utilisation
+      } else {
+        console.error("Le PDF généré est vide ou invalide.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la génération du PDF :", error);
+    }
+  };
 
   if (inventoryLoading || recordsLoading) {
     return (
@@ -52,15 +86,23 @@ const AdminInventoryDetails = () => {
             <h1 className="text-2xl font-bold">
               {inventory.nom || "Inventaire"}
             </h1>
-            <span
-              className={`py-1 px-2 rounded-full text-xs font-semibold ${
-                inventory.statut === "En cours"
-                  ? "bg-red-500 text-white"
-                  : "bg-green-500 text-white"
-              }`}
-            >
-              {inventory.statut}
-            </span>
+            <div className="flex items-center gap-4">
+              <span
+                className={`py-1 px-2 rounded-full text-xs font-semibold ${
+                  inventory.statut === "En cours"
+                    ? "bg-red-500 text-white"
+                    : "bg-green-500 text-white"
+                }`}
+              >
+                {inventory.statut}
+              </span>
+              <button
+                onClick={handleGeneratePDF}
+                className={`py-1 px-4 text-sm font-semibold text-white rounded ${"bg-blue-600 hover:bg-blue-700"}`}
+              >
+                Générer PDF
+              </button>
+            </div>
           </div>
 
           {/* Dates */}
@@ -90,6 +132,20 @@ const AdminInventoryDetails = () => {
                   <p className="text-sm text-gray-400 mb-2">
                     {zone.designation} - {zone.lieu}
                   </p>
+                  {zone.parties && zone.parties.length > 0 && (
+                    <div className="mt-2">
+                      {zone.parties.map((partie, index) => (
+                        <div key={index} className="mb-2">
+                          <p className="text-sm font-semibold">
+                            {partie.type} - Status: {partie.status}
+                          </p>
+                          {partie.codeBarre && (
+                            <Barcode value={partie.codeBarre.toString()} />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

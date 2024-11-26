@@ -74,9 +74,12 @@ export const inventoriesApiSlice = apiSlice.injectEndpoints({
       query: (inventoryId) => ({
         url: `${INVENTORIES_URL}/${inventoryId}/generate-pdf`,
         method: 'GET',
-        responseType: 'blob', // To handle the PDF file
         credentials: 'include',
+        headers: {
+          Accept: 'application/pdf', // S'assurer que le client attend un PDF
+        },
       }),
+      responseHandler: (response) => response.blob(), // Handle the PDF response as a blob
     }),
   }),
 });
