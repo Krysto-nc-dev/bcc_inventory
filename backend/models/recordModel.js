@@ -9,7 +9,7 @@ const RecordSchema = new mongoose.Schema(
     },
     typeAction: {
       type: String,
-      enum: ['Comptage', 'Bipage', 'Contrôle'],
+      enum: ['COMPTAGE', 'BIPAGE', 'CONTROLE'],
       required: [true, "Veuillez fournir le type d'action"],
     },
     agent: {

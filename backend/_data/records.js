@@ -2,7 +2,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be200",
     zone: "5f2b514b5d2c12c7449be000", // Zone correspondante
-    typeAction: "Comptage",
+    typeAction: "COMPTAGE",
     agent: "5f1a514b5d2c12c7449be001", // Agent correspondant
     codeBarre: "4006381333931",
     quantite: 15,
@@ -11,7 +11,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be201",
     zone: "5f2b514b5d2c12c7449be001",
-    typeAction: "Bipage",
+    typeAction: "BIPAGE",
     agent: "5f1a514b5d2c12c7449be002",
     codeBarre: "4006381333948",
     quantite: null,
@@ -20,7 +20,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be202",
     zone: "5f2b514b5d2c12c7449be002",
-    typeAction: "Contrôle",
+    typeAction: "CONTROLE",
     agent: "5f1a514b5d2c12c7449be003",
     codeBarre: "4006381333955",
     quantite: null,
@@ -29,7 +29,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be203",
     zone: "5f2b514b5d2c12c7449be003",
-    typeAction: "Comptage",
+    typeAction: "COMPTAGE",
     agent: "5f1a514b5d2c12c7449be004",
     codeBarre: "4006381333962",
     quantite: 25,
@@ -38,7 +38,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be204",
     zone: "5f2b514b5d2c12c7449be004",
-    typeAction: "Bipage",
+    typeAction: "BIPAGE",
     agent: "5f1a514b5d2c12c7449be005",
     codeBarre: "4006381333979",
     quantite: null,
@@ -47,7 +47,7 @@ const records = [
   {
     _id: "5f4b514b5d2c12c7449be205",
     zone: "5f2b514b5d2c12c7449be005",
-    typeAction: "Contrôle",
+    typeAction: "CONTROLE",
     agent: "5f1a514b5d2c12c7449be006",
     codeBarre: "4006381333986",
     quantite: null,

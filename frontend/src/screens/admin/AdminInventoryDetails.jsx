@@ -1,12 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useGetInventoryByIdQuery } from "../../slices/inventorySlice";
 import { useGetRecordsQuery } from "../../slices/recordSlice";
 import Barcode from "react-barcode"; // Importer Barcode
 
 const AdminInventoryDetails = () => {
   const { id: inventoryId } = useParams();
+  const navigate = useNavigate();
 
   // Récupérer les détails de l'inventaire
   const {
@@ -126,24 +127,16 @@ const AdminInventoryDetails = () => {
               {inventory.zones.map((zone) => (
                 <div
                   key={zone._id}
-                  className="p-3 bg-gray-700 rounded-md shadow-md"
+                  onClick={() => navigate(`/admin/zones/${zone._id}`)}
+                  className="p-3 bg-gray-700 rounded-md shadow-md cursor-pointer hover:bg-gray-600"
                 >
                   <h3 className="text-lg font-bold mb-1">{zone.nom}</h3>
                   <p className="text-sm text-gray-400 mb-2">
                     {zone.designation} - {zone.lieu}
                   </p>
-                  {zone.parties && zone.parties.length > 0 && (
+                  {zone.codeBarre && (
                     <div className="mt-2">
-                      {zone.parties.map((partie, index) => (
-                        <div key={index} className="mb-2">
-                          <p className="text-sm font-semibold">
-                            {partie.type} - Status: {partie.status}
-                          </p>
-                          {partie.codeBarre && (
-                            <Barcode value={partie.codeBarre.toString()} />
-                          )}
-                        </div>
-                      ))}
+                      <Barcode value={zone.codeBarre.toString()} />
                     </div>
                   )}
                 </div>
