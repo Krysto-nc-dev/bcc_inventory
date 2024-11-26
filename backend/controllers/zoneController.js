@@ -17,7 +17,7 @@ const getZones = asyncHandler(async (req, res) => {
 // @route   POST /api/zones
 // @access  Public
 const createZone = asyncHandler(async (req, res) => {
-  const { nom, designation, lieu } = req.body;
+  const { nom, designation, lieu, observation } = req.body;
 
   // Générer automatiquement les parties avec codes-barres et statuts
   const parties = [
@@ -29,6 +29,7 @@ const createZone = asyncHandler(async (req, res) => {
   const zone = new Zone({
     nom,
     designation,
+    observation,
     lieu,
     parties,
   });

@@ -21,7 +21,9 @@ const AdminZoneDetails = () => {
   } = useGetZoneByIdQuery(zoneId);
   const [updateZone] = useUpdateZoneMutation();
   const [createRecord] = useCreateRecordMutation();
-
+  console.log("====================================");
+  console.log("zone:", zone);
+  console.log("====================================");
   useEffect(() => {
     // Focus automatique sur l'input de code-barres pour écouter les scans
     if (barcodeInputRef.current) {
@@ -128,6 +130,7 @@ const AdminZoneDetails = () => {
             <p className="text-sm text-gray-400 mb-2">
               {zone.designation} - {zone.lieu}
             </p>
+            <p>{zone.observation}</p>
           </div>
 
           {/* Parties de la Zone */}

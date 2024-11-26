@@ -41,6 +41,7 @@ const router = createBrowserRouter(
         {/* Exemple de route admin */}
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="inventories" element={<AdminInventories />} />
+        <Route path="inventories/documentation" element={<AdminInventories />} />
         <Route path="inventories/:id" element={<AdminInventoryDetails />} /> {/* Route pour les détails d'un inventaire */}
         <Route path="zones/:id" element={<AdminZoneDetails/>} /> {/* Route pour les détails d'un inventaire */}
       </Route>

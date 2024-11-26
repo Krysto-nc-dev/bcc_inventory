@@ -42,6 +42,12 @@ const ZoneSchema = new mongoose.Schema({
     required: [true, 'Le lieu de la zone est requis.'],
     trim: true,
   },
+  
+  observation: {
+    type: String,
+    trim: true,
+  },
+  
   parties: {
     type: [ZonePartSchema], // Liste des parties de la zone
     required: [true, 'Les parties de la zone sont requises.'],
