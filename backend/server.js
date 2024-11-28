@@ -46,8 +46,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Configuration CORS
 const allowedOrigins = [
   "http://localhost:3000", // Local development
-  "https://krysto.io", // Production domain
-  "https://api.krysto.io", // Production API subdomain
+  "https://robot-nc.com", // Production domain
+  "https://api.robot-nc.com", // Production API subdomain
 ];
 
 app.use(
